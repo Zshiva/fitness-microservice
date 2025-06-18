@@ -4,7 +4,6 @@ import io.soabase.recordbuilder.core.RecordBuilder;
 
 @RecordBuilder
 public record RestResponse<T>(String code, String message, T data) {
-
     public static <T> RestResponse success(){
         return RestResponseBuilder.builder()
                 .code("0")
@@ -25,7 +24,6 @@ public record RestResponse<T>(String code, String message, T data) {
                 .message(message)
                 .build();
     }
-
     public static RestResponse error(String message) {
         return RestResponseBuilder.builder()
                 .code("400")
