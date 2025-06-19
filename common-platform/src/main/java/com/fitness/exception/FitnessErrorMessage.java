@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 public enum FitnessErrorMessage {
     USER_NOT_FOUND("F1","User not found"),
     INVALID_REQUEST("F2", "Invalid_Request"),
-    ACTIVITY_NOT_FOUND_FOR_GIVEN_USERID("F3","Activity not found" );
+    ACTIVITY_NOT_FOUND_FOR_GIVEN_USERID("F3","Activity not found" ),
+    EMAIL_ALREADY_EXISTS("F4","Email Already Exists");
+
     private String code;
     private String message;
 
