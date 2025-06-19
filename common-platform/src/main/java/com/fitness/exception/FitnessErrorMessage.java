@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 
 public enum FitnessErrorMessage {
     USER_NOT_FOUND("F1","User not found"),
-    INVALID_REQUEST("F2", "Invalid_Request");
+    INVALID_REQUEST("F2", "Invalid_Request"),
+    ACTIVITY_NOT_FOUND_FOR_GIVEN_USERID("F3","Activity not found" );
     private String code;
     private String message;
 
@@ -16,12 +17,9 @@ public enum FitnessErrorMessage {
         this.code = code;
         this.message = message;
     }
-
-
     public String getCode() {
         return code;
     }
-
     public void setCode(String code) {
         this.code = code;
     }
