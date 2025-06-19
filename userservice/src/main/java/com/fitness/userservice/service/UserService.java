@@ -1,21 +1,25 @@
 package com.fitness.userservice.service;
 
+import com.fitness.exception.FitnessErrorMessage;
+import com.fitness.exception.FitnessException;
 import com.fitness.userservice.dto.RegisterRequest;
 import com.fitness.userservice.dto.UserResponse;
 import com.fitness.userservice.model.User;
 import com.fitness.userservice.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class UserService {
     @Autowired
     private UserRepository repository;
     public UserResponse register(RegisterRequest request) {
 
         if(repository.existsByEmail(request.getEmail())){
-            throw new RuntimeException("Email Already exists");
+            throw new FitnessException(FitnessErrorMessage.EMAIL_ALREADY_EXISTS);
         }
         User user = new User();
         user.setEmail(request.getEmail());
@@ -38,7 +42,7 @@ public class UserService {
 
     public UserResponse getUserProfile(String userId) {
         User user = repository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User Not Found"));
+                .orElseThrow(() -> new FitnessException(FitnessErrorMessage.USER_NOT_FOUND));
 
         UserResponse userResponse = new UserResponse();
         userResponse.setId(user.getId());
@@ -49,5 +53,10 @@ public class UserService {
         userResponse.setCreatedAt(user.getCreatedAt());
         userResponse.setUpdatedAt(user.getUpdatedAt());
         return userResponse;
+    }
+
+    public Boolean existByUserId(String userId) {
+        log.info("Calling User Validation API for userId : {}", userId);
+        return repository.existsById(userId);
     }
 }
