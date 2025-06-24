@@ -2,6 +2,7 @@ package com.fitness.activityservice.service;
 
 import com.fitness.exception.FitnessErrorMessage;
 import com.fitness.exception.FitnessException;
+import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,10 @@ public class UserValidationService {
     public boolean validateUser(String userId){
         log.info("Calling User Validation API for userId : {}", userId);
         try {
+            var env = Dotenv.load();
+            String uri = env.get("USER_ID_VALIDATION");
             return userServiceWebClient.get()
-                    .uri("/api/users/{userId}/validate", userId)
+                    .uri(uri, userId)
                     .retrieve()
                     .bodyToMono(Boolean.class)
                     .block();
